@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "my-marketplace",
+  "description": "FUJI の自作スキルコレクション",
+  "owner": {
+    "name": "FUJI"
+  },
+  "plugins": [
+    {
+      "name": "my-claude-plugin",
+      "description": "記事制作ワークフロー向けスキル集（企画・執筆・レビュー・編集・サムネイル）",
+      "author": {
+        "name": "FUJI"
+      },
+      "source": "./plugins/my-claude-plugin",
+      "category": "productivity"
+    }
+  ]
+}
