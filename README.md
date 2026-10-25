@@ -2,6 +2,12 @@
 
 Claude Code 向けのプラグインを管理するリポジトリです。
 
+## 正本とアーカイブ
+
+記事制作スキルの正本は、この `my-marketplace` リポジトリの `plugins/my-claude-plugin/` です。今後の機能追加・修正・検証資料の更新はここで行います。
+
+旧 `02learning/09Bibliotheca-skills` は2026-10-25に `04_Archives/09Bibliotheca-skills` へ移動しました（パスはローカルのworkspace基準）。旧フォルダはGit履歴・原資料の参照用に保持し、開発・配布元としては使用しません。統合済みの設計履歴と検証資料はこのリポジトリにも保存されています。
+
 ## プラグイン
 
 ### my-claude-plugin
