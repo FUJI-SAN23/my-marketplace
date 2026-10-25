@@ -6,7 +6,7 @@ Claude Code 向けのプラグインを管理するリポジトリです。
 
 ### my-claude-plugin
 
-記事作成ワークフローを支援するスキル集です。企画・執筆・レビュー・編集指示・サムネイル生成の各工程をスキルとして提供します。
+記事作成ワークフローを支援するスキル集です。企画・タイトル提案・執筆・レビュー・編集指示・サムネイル生成の各工程をスキルとして提供します。
 
 ## スキル一覧
 
@@ -15,6 +15,8 @@ Claude Code 向けのプラグインを管理するリポジトリです。
 ```
 article-facilitator
        ↓ ArticleContext を出力
+article-title-suggestion（任意）
+       ↓ 確定タイトル付き ArticleContext
 article-writer
        ↓ ArticleDraft を出力
    ┌───┴───┐
@@ -35,7 +37,7 @@ article-reviewer  article-editor  article-thumbnail
 
 ArticleContext をもとに記事の本文ドラフト（**ArticleDraft**）を生成します。
 
-- タイトル案 3本・導入文・本文・まとめ・不足情報リスト・推測箇所リストを出力する
+- 確定タイトル（未確定ならタイトル案3本）・導入文・本文・まとめ・不足情報リスト・推測箇所リストを出力する
 - ユーザー提供の体験談・一次情報は `【一次情報】` タグで明示する
 - 推測で補った箇所には `（確認要）` マーカーを付与する
 - 部分修正モードをサポート（指定セクションのみ再生成）
@@ -80,6 +82,8 @@ my-marketplace/
         └── skills/
             ├── article-facilitator/
             │   └── SKILL.md
+            ├── article-title-suggestion/
+            │   └── SKILL.md
             ├── article-writer/
             │   ├── SKILL.md
             │   └── template.md        # 出力テンプレートと表記規約
@@ -98,19 +102,28 @@ my-marketplace/
 各スキルはスラッシュコマンドで呼び出します。
 
 ```
-/article-facilitator   # 企画・構成の確定
-/article-writer        # ドラフト生成
-/article-reviewer      # レビュー
-/article-editor        # 編集指示の挿入
-/article-thumbnail     # サムネイルプロンプト生成
+/my-claude-plugin:article-facilitator   # 企画・構成の確定
+/my-claude-plugin:article-title-suggestion # タイトル提案・確定（任意）
+/my-claude-plugin:article-writer        # ドラフト生成
+/my-claude-plugin:article-reviewer      # レビュー
+/my-claude-plugin:article-editor        # 編集指示の挿入
+/my-claude-plugin:article-thumbnail     # サムネイルプロンプト生成
 ```
 
 ### 推奨フロー
 
-1. `/article-facilitator` で記事の企画・構成を固め、ArticleContext を出力する
-2. `/article-writer` でドラフトを生成する
-3. `/article-reviewer` でレビューを受け、必要に応じて `/article-writer` で部分修正する
-4. `/article-editor` で画像・図表の挿入箇所に編集指示を追加する
-5. `/article-thumbnail` でサムネイル用プロンプトを生成する
+1. `/my-claude-plugin:article-facilitator` で記事の企画・構成を固め、ArticleContext を出力する
+2. `/my-claude-plugin:article-writer` でドラフトを生成する
+3. `/my-claude-plugin:article-reviewer` でレビューを受け、必要に応じて `/my-claude-plugin:article-writer` で部分修正する
+4. `/my-claude-plugin:article-editor` で画像・図表の挿入箇所に編集指示を追加する
+5. `/my-claude-plugin:article-thumbnail` でサムネイル用プロンプトを生成する
 
 各スキルは前工程の成果物（ArticleContext / ArticleDraft）が会話履歴に存在するかをフェーズゲートで確認します。存在しない場合は前工程スキルの実行を案内します。
+
+## タイトル提案の統合
+
+`/my-claude-plugin:article-title-suggestion` を企画後または執筆後に任意で実行できます。5件以上の候補、3軸の参考スコア、フィードバックによる3件以上の派生案を提示し、ユーザーの明示的な決定後に確定タイトルを引き継ぎます。
+
+Markdown の `タイトル（確定）` と JSON の `title` は同じ値です。writer は確定タイトルをそのまま使い、reviewer・editor・thumbnail も最新値を参照します。執筆後に確定した場合は writer に「確定タイトルを反映して」と依頼するとタイトル部分のみ更新します。タイトル提案を省略した従来のフローも使えます。
+
+詳細: [プラグインREADME](./plugins/my-claude-plugin/README.md) / [統合検証](./plugins/my-claude-plugin/docs/integration-verification.md)

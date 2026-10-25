@@ -3,6 +3,8 @@ name: article-editor
 description: 記事ドラフトに編集指示を挿入したいとき。「編集指示を入れて」「画像の挿入箇所を指定して」「媒体編集用に注釈を入れて」「どこに図を入れるか教えて」と言われたとき。article-writer が生成したドラフトに対して、ビジュアル配置の指示を追加したいとき。
 ---
 
+共通の[ArticleContext・確定タイトル契約](../../references/article-context.md)を読み、入力形式・確定値・後続工程への受け渡しに適用する。
+
 # article-editor
 
 article-writer が生成した ArticleDraft を読み込み、画像・図表・コールアウトなどの **編集指示（ト書き）** を適切な箇所に挿入した「注釈付きドラフト」を生成する。

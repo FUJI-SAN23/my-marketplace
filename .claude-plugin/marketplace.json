@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "my-claude-plugin",
-      "description": "記事制作ワークフロー向けスキル集（企画・執筆・レビュー・編集・サムネイル）",
+      "description": "記事制作ワークフロー向けスキル集（企画・タイトル提案・執筆・レビュー・編集・サムネイル）",
       "author": {
         "name": "FUJI"
       },

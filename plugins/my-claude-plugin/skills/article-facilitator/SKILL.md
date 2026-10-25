@@ -3,6 +3,8 @@ name: article-facilitator
 description: 記事テーマが提示されたとき、または記事の企画・構成を整理したいとき。ノウハウ解説記事の執筆を始めようとしているとき、アイデアはあるが何から書けばよいか分からないとき。
 ---
 
+共通の[ArticleContext・確定タイトル契約](../../references/article-context.md)を読み、入力形式・確定値・後続工程への受け渡しに適用する。
+
 # article-facilitator
 
 ユーザーとの対話を通じて記事の企画・構成を固め、article-writer が使用する **ArticleContext** を生成する。
@@ -97,7 +99,7 @@ description: 記事テーマが提示されたとき、または記事の企画�
 
 ユーザーが構成案を承認したら、以下の **ArticleContext** ブロックを出力する。
 
-このブロックは article-writer と article-reviewer が参照する共有コンテキストである。
+このブロックは後続スキルが参照する共有コンテキストである。任意の確定タイトル行と既存の追加フィールドは共通契約に従って保持する。タイトル未確定ならその行は省略する。
 
 ```markdown
 ## ArticleContext

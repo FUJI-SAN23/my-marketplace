@@ -6,4 +6,4 @@ Claude Code プラグインを格納するディレクトリです。
 
 | ディレクトリ | 説明 |
 |------------|------|
-| [my-claude-plugin](./my-claude-plugin/) | 記事作成ワークフローを支援するスキル集 |
+| [my-claude-plugin](./my-claude-plugin/) | 企画・タイトル提案・執筆・レビュー・編集・サムネイルの6スキル |

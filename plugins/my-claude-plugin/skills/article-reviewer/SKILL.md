@@ -3,6 +3,8 @@ name: article-reviewer
 description: 記事ドラフトのレビューや校正が指示されたとき。「レビューして」「校正して」「チェックして」「事実確認リストを作って」と言われたとき。article-writer が生成したドラフトの品質を確認したいとき。
 ---
 
+共通の[ArticleContext・確定タイトル契約](../../references/article-context.md)を読み、入力形式・確定値・後続工程への受け渡しに適用する。
+
 # article-reviewer
 
 article-writer が生成した ArticleDraft を読み込み、レビューコメントと事実確認リストを生成する。
@@ -18,6 +20,7 @@ article-writer が生成した ArticleDraft を読み込み、レビューコメ
 - **ドラフトを修正・書き直すことは絶対にしない**
 - 事実確認が必要な箇所を抽出して一覧化する
 - 修正はユーザー（または article-writer）が行う
+- ArticleContext に `タイトル（確定）`（JSONでは `title`）フィールドが設定されている場合、そのタイトルを確定タイトルとして参照してレビューする（タイトルの変更提案は不要）
 
 ---
 

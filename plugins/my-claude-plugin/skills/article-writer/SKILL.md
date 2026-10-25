@@ -3,6 +3,8 @@ name: article-writer
 description: 構成案が合意されたあとにドラフト生成が指示されたとき。「ドラフトを書いて」「本文を作成して」「記事を生成して」と言われたとき。ArticleContext が会話にある状態で記事執筆が求められたとき。
 ---
 
+共通の[ArticleContext・確定タイトル契約](../../references/article-context.md)を読み、入力形式・確定値・後続工程への受け渡しに適用する。
+
 # article-writer
 
 article-facilitator が生成した **ArticleContext** を読み込み、修正しやすい本文ドラフトを生成する。
@@ -20,7 +22,7 @@ article-facilitator が生成した **ArticleContext** を読み込み、修正�
 
 ## フェーズゲート G1 チェック（最初に必ず実行）
 
-ドラフト生成を開始する前に、会話履歴に `## ArticleContext` セクションが存在するか確認する。
+ドラフト生成を開始する前に、会話履歴に `## ArticleContext` セクション、または共通契約に適合する ArticleContext JSON が存在するか確認する。
 
 **ArticleContext が存在しない場合:**
 ```
@@ -30,7 +32,7 @@ article-facilitator が生成した **ArticleContext** を読み込み、修正�
 ```
 → この時点で処理を停止する。ArticleContext なしにドラフトを生成しない。
 
-**ArticleContext が存在するが `確認日時` が設定されていない場合:**
+**ArticleContext が存在するが `確認日時`（JSONでは `confirmedAt`）が設定されていない場合:**
 ```
 構成案がまだ確定していません。
 article-facilitator で構成案を確認・承認してから再度お試しください。
@@ -67,9 +69,17 @@ article-facilitator で構成案を確認・承認してから再度お試しく
 
 [article-writer/template.md](./template.md) の構造に従って出力する。
 
+### タイトルの扱い
+
+ArticleContext に `タイトル（確定）`（JSONでは `title`）フィールドが設定されている場合（article-title-suggestion で確定済みの場合）：
+- そのタイトルを最終タイトルとしてドラフトの冒頭に使用する
+- 追加のタイトル案生成はスキップする
+
+ArticleContext に確定タイトルがない場合は、通常通り3本のタイトル案を生成する。
+
 ### 出力に必ず含めるもの
 
-1. **タイトル案 3本** — 読者の悩み・ベネフィットを訴求する案を3つ提示する
+1. **タイトル案 3本**（ArticleContext に確定タイトルがない場合のみ） — 読者の悩み・ベネフィットを訴求する案を3つ提示する
 2. **導入文** — 読者の悩みに共感して引き込む冒頭（200〜400字目安）
 3. **本文（見出し構成付き）** — ArticleContext の構成案に従って H2・H3 構成で展開する
 4. **まとめ** — 要点の整理と読者の次のアクションへの誘導
